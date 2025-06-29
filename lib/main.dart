@@ -115,7 +115,13 @@ class _BatchOCRHomePageState extends State<BatchOCRHomePage> {
   Future<File> _cropImageWithRect(File imageFile, _ImageCropData cropData) async {
     final bytes = await imageFile.readAsBytes();
     final original = img.decodeImage(bytes)!;
-    final cropped = img.copyCrop(original, cropData.x, cropData.y, cropData.width, cropData.height);
+    final cropped = img.copyCrop(
+  original,
+  x: cropData.x,
+  y: cropData.y,
+  width: cropData.width,
+  height: cropData.height,
+);
     final output = File('${(await getTemporaryDirectory()).path}/${DateTime.now().millisecondsSinceEpoch}_${imageFile.path.split('/').last}');
     await output.writeAsBytes(img.encodeJpg(cropped));
     return output;
